@@ -1,0 +1,623 @@
+/* ---------- GLOBAL STYLES ---------- */
+
+body {
+    margin: 0;
+    height: fit-content;
+    font-family: 'Work Sans', sans-serif;
+    background: #222;
+    font-weight: 800;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px); /* Adjust based on header height */
+    position: relative;
+}
+
+.main-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.back-vid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* ---------- MOBILE COMPATABILITY ---------- */
+
+@media (max-width: 600px) {
+  .card {
+    width: 95vw;
+    height: 60vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-info h1,
+  .hero-info h2,
+  .info-card h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ---------- NAV BAR ---------- */
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+header {
+    background: #4acfee;
+}
+
+header::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.logo {
+    float: left;
+    padding: 10px 0;
+}
+
+nav {
+    float: right;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li {
+    display: inline-block;
+    margin-left: 70px;
+    padding-top: 23px;
+    position: relative;
+}
+
+nav a {
+    color: #444;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #000;
+}
+
+nav a::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background-color: #444;
+    position: absolute;
+    top: 0;
+    width: 0%;
+    transition: all ease-in-out 250ms;
+}
+
+nav a:hover::before {
+    width: 100%;
+}
+
+/* ---------- CARD STYLES ---------- */
+
+.card-container {
+    perspective: 1000px;
+    margin-bottom: 20px;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+    transform: translateX(0);
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; */
+}
+
+.card {
+    /* width: 90vw; */
+    /* height: 75vh; */
+    width: min(95vw,2000px); /* responsive width, but max 800px */
+    aspect-ratio: 1.75 / 1;  /* width:height ratio locked */
+    max-width: 1200px;
+    position: relative;
+    transform-style: preserve-3d;
+    border-radius: 30px;
+    box-shadow: 
+        8px 8px 20px #4acfee,
+        0px 10px 30px #4acfee;
+    transition: transform 1s ease;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    z-index: 1;
+    pointer-events: none;
+    box-shadow:
+        inset 1px 1px 3px rgba(255, 255, 255, 0.2),  /* top-left highlight */
+        inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+    /* transition: transform 0.8s ease; */
+}
+
+.front {
+    
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.card-back {
+  /* background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px); */
+  border-radius: 30px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  flex-direction: column;
+  text-align: left;
+}
+
+.about-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  height: 100%;
+  max-width: 1000px;
+  flex-wrap: wrap;
+}
+
+.side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    backface-visibility: hidden;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* ---------- CARD CONTENT STYLES ---------- */
+
+.hero-card {
+    display: flex;
+    align-items: center;           /* vertical alignment */
+    justify-content: space-between; /* image on right */
+    height: 100%;                   /* full height of the card section */
+    width: 100%;
+    gap: 20px;
+    padding: 30px 30px 30px 30px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.hero-info {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    width: 45%;
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem); /* auto scales with screen */
+    z-index: 2;
+}
+
+.hero-info h1 {
+    font-size: 3.5em;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.hero-info h2 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 2em;
+    text-transform: uppercase;
+    background:linear-gradient(to right, #4acfee, #53f8c9, #6070fd, #5bbdff, #4acfee);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animate-gradient 2.5s linear infinite;
+}
+
+.hero-info p {
+    font-size: 1em;
+    margin-top: 0;
+    margin-bottom: 50px;
+}
+
+.hero-img {
+    width: clamp(25%, 100%, 250px);
+    height: clamp(50%, 100%, 250px);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 15px #4acfee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: lighten;
+}
+
+.about-content {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  line-height: 1.6;
+  color: #fff;
+}
+
+.about-content p {
+  margin-bottom: 1.2em;
+}
+
+.about-content .closing-note {
+  margin-top: 30px;
+  font-weight: 600;
+  font-style: italic;
+  color: #4acfee;
+  text-align: center;
+}
+
+.card-icon-container {
+    position: absolute;
+    top: 20px;
+    right: -70px;
+
+    width: 75%;
+    height: 75%; /* square */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 15px #4acfee;
+    padding: 20px; */
+
+    z-index: -10;
+}
+
+.card-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: lighten; /* optional for transparency feel */
+}
+
+.info-sec {
+    /* display: flex;
+    width: 100%;
+    gap: 20px;
+    padding: 0 10%;
+    flex-wrap: wrap;
+    justify-content: space-between; */
+    font-size: 150%;
+    position: absolute;
+    bottom: 42px;
+    left: 3%;
+    width: 90%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 2;
+    flex-wrap: wrap;
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem); /* Responsive base */ 
+}
+
+
+.info-card {
+    display: flex;
+    /* width: 100%; */
+    align-items: center;
+    max-width: fit-content;
+}
+
+.info-card h1 {
+    font-size: 3em;
+    /* background: linear-gradient(to right, #4acfee, #53f8c9); */
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: animate-gradient 2.5s linear infinite;
+}
+
+.ul-icons {
+    display: flex;
+    align-items: center;
+}
+
+.ul-icons li {
+    list-style: none;
+    margin-left: 10px;
+}
+
+.ul-icons a {
+    display: inline-flex;
+    padding: 8px;
+    border: 2px solid #4acfee;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #4acfee;
+    text-decoration: none;
+    margin: 0 7px;
+    transition: 0.3s;
+}
+
+.ul-icons a:hover {
+    background: #4acfee;
+    color: #0e1217;
+    box-shadow: 0 0 10px #4acfee;
+}
+
+/* ---------- BUTTON STYLES ---------- */
+
+.button-row {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* space between button and icons */
+  margin-top: -20px;
+}
+
+.btn {
+    position: relative;     /* Add this */
+    z-index: 10;            /* Ensure it's above .side and .card */
+    padding: 15px 30px;
+    background-color: #4acfee;
+    border: 2px solid #4acfee;
+    border-radius: 40px;
+    box-shadow: 0 0 10px #4acfee;
+    font-size: 16px;
+    font-weight: 900;
+    color: #0e1217;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: transparent;
+    box-shadow: none;
+    color: #4acfee;
+}
+
+.indent {
+        text-indent: 50px; /* Indents the first line by 50 pixels */
+    }
+
+/* ---------- COLOR GRADIENT ---------- */
+
+.gradient-text {
+    background: linear-gradient(to right, #4acfee, #53f8c9, #6070fd, #5bbdff, #4acfee);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animate-gradient 2.5s linear infinite;
+}
+
+@keyframes animate-gradient {
+    to {
+        background-position: 200%;
+    }
+}
+
+
+/* ---------- SLIDING STYLES ---------- */
+
+.card-container.slide-left,
+button.btn.slide-left {
+  transform: translateX(-120%);
+  opacity: 0;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+/* Hidden by default */
+.hidden {
+  display: none;
+}
+
+
+/* ---------- PORTFOLIO SECTION ---------- */
+
+.portfolio-section {
+  position: absolute;
+  top: 60px;
+  left: 100%;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  color: white;
+  padding: 40px;
+  box-sizing: border-box;
+  transition: left 0.8s ease;
+  z-index: 9;
+  overflow: hidden;
+}
+
+.portfolio-section.active {
+  left: 0;
+}
+
+.portfolio-title {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  text-align: center;
+}
+
+.portfolio-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-top: 20px;
+}
+
+.portfolio-item {
+  position: relative;
+  min-width: 300px;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover img {
+  transform: scale(1.1);
+}
+
+/* Overlay effect */
+.portfolio-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 20px;
+  text-align: center;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+.portfolio-overlay h3 {
+  margin: 0 0 10px;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+}
+
+.portfolio-overlay p {
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+}
+
+/* Optional scrollbar style */
+.portfolio-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.portfolio-scroll::-webkit-scrollbar-thumb {
+  background-color: #4acfee;
+  border-radius: 4px;
+}
+
+
+/* ---------- CONTACT SECTION ---------- */
+
+.contact-section {
+    position: fixed;
+    top: 100%;               /* Start below the viewport */
+    left: 0;
+    width: 100%;
+    height: 100vh;           /* Full viewport height */
+    background: rgba(0, 0, 0, 0.85); /* Dark translucent overlay */
+    backdrop-filter: blur(12px);
+    color: white;
+    padding: 40px;
+    box-sizing: border-box;
+    transition: top 0.6s ease;
+    z-index: 1000;           /* On top of everything */
+    overflow-y: auto;        /* Scroll if content overflows */
+}
+
+.contact-section.active {
+  top: 60px; /* same as header height */
+}
+
+
+.contact-section.active {
+  left: 0;
+}
+
+.contact-title {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  resize: none;
+  outline: none;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #ccc;
+}
+
+#contactCloseBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+}

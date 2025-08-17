@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Card</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="media/icon.ico" type="image/x-icon">
+    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+        <h1 class="logo"></h1>
+
+        <nav>
+            <ul>
+                <li><a href="index.html" id="homeLink">Home</a></li>
+                <li><a href="index.html?flip=back">About</a></li>
+                <li><a href="#portfolio" id="portfolioLink">Portfolio</a></li>
+                <li><a href="#contact" id="contactLink">Contact</a></li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+
+    <video autoplay loop muted playsinline class="back-vid">
+        <source src="media/data.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <main class="main-section">
+
+        <div class="card-container">
+            <div class="card" id="businessCard">
+                <div class="side front">
+                    <!-- <img src="media/icon.png" alt="Icon" class="corner-icon"> -->
+                    <div class="hero-card">
+                        <div class="hero-info">
+                            <h1 data-aos="fade-right" data-aos-duration="1000" data-aos-delay="700">Hi, I'm Shane!</h1>
+                            <h2 class="typewriter gradient-text" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="900">
+                                I'm a <span class="typewriter-text"></span><span class="cursor">|</span>
+                            </h2>
+                            <p data-aos="flip-down" data-aos-duration="1000" data-aos-delay="1000"> ~ <i>I would love to change the world</i> . . .</p> 
+                            <p class="indent" data-aos="flip-down" data-aos-duration="1000" data-aos-delay="1000"><i>but God won't give me the source code</i> ~</p>
+                            <div class="button-row" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="1100">
+                                <a href="https://github.com/shanekdang/portfolio/raw/main/resume.pdf" target="_blank" class="btn" download>Download Resume</a> 
+                                <ul class="ul-icons">
+                                    <li><a href="https://github.com/shanekdang" aria-label="GitHub Profile"><i class='bx bxl-github'></i></a></li>
+                                    <li><a href="https://www.linkedin.com/in/shane-dang/" aria-label="LinkedIn Profile"><i class='bx bxl-linkedin'></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-icon-container" data-aos="zoom-in-left" data-aos-duration="2500">
+                            <!-- <img src="images/headshot2.jpg" alt="person-img"> -->
+                            <img src="media/icon.png" alt="Brand Icon" class="card-icon">
+                        </div>
+                    </div>
+                    <div class="info-sec">
+                        <div class="info-card" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1600">
+                            <h1 class="gradient-text">2+</h1>
+                            <p>Years of <br> Experience</p>
+                        </div>
+                        <div class="info-card" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1700">
+                            <h1 class="gradient-text">7+</h1>
+                            <p>Technical <br> Skills</p>
+                        </div>
+                        <div class="info-card" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1800">
+                            <h1 class="gradient-text">20+</h1>
+                            <p>Projects <br> Completed</p>
+                        </div>
+                        <div class="info-card" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1900">
+                            <h1 class="gradient-text">20+</h1>
+                            <p>Satisfied <br> Clients</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="side back card-back">
+                    <div class="about-wrapper">
+                        <div class="hero-img" data-aos="zoom-in-right" data-aos-duration="2500">
+                            <img src="media/headshot.jpg" alt="Shane Dang">
+                        </div>
+                        <div class="about-content">
+                            <p>Hi, I’m Shane! I blend clean design with thoughtful code.</p>
+                            <p>I’m a <strong>Software Engineer</strong> with 2+ years of experience, fueled by my love for intuitive design and problem-solving.</p>
+                            <p>My journey started from a fascination with how things work—bit by bit, I built projects that marry functionality and creativity.</p>
+                            <p>Away from the screen, I enjoy exploring new places, tinkering with side projects, and always learning something new.</p>
+                            <p class="closing-note">Let’s build something awesome together! 🚀</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <button class="btn" onclick="flipCard()">Flip Card</button> -->
+
+        <section class="portfolio-section hidden" id="portfolioSection">
+            <h2 class="portfolio-title">My Portfolio</h2>
+            <div class="portfolio-scroll">
+                <div class="portfolio-item">
+                <img src="media/project1.jpg" alt="Project 1">
+                <div class="portfolio-overlay">
+                    <h3>Project One</h3>
+                    <p>Short description for project one.</p>
+                </div>
+                </div>
+                <div class="portfolio-item">
+                <img src="media/project2.jpg" alt="Project 2">
+                <div class="portfolio-overlay">
+                    <h3>Project Two</h3>
+                    <p>Short description for project two.</p>
+                </div>
+                </div>
+                <div class="portfolio-item">
+                <img src="media/project3.jpg" alt="Project 3">
+                <div class="portfolio-overlay">
+                    <h3>Project Three</h3>
+                    <p>Short description for project three.</p>
+                </div>
+                </div>
+                <!-- Add more items as needed -->
+            </div>
+        </section>
+
+        <section class="contact-section hidden" id="contactSection">
+            <h2 class="contact-title">Contact Me</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required />
+                <input type="email" placeholder="Your Email" required />
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+            <button id="contactCloseBtn" class="btn">Close</button>
+        </section>
+
+
+
+    </main>
+
+    <script src="script.js" defer></script>
+
+</body>
+</html>
