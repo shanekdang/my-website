@@ -6,24 +6,73 @@ document.addEventListener('DOMContentLoaded', function () {
   const CLASS_SLIDE_LEFT = 'slide-left';
   const CLASS_DIMMED = 'dimmed';
 
-  const slideDuration = 200;  // slide transition time in ms
-  const flipDuration = 600;   // estimated flip duration
+  const slideDuration = 200;
+  const flipDuration = 600;
 
   /* ----- Elements ----- */
+  const urlParams = new URLSearchParams(window.location.search);
   const card = document.getElementById('businessCard');
+  const flipToggleBtn = document.getElementById('flipToggleBtn');
   const cardContainer = document.querySelector('.card-container');
   const portfolioSection = document.getElementById('portfolioSection');
   const portfolioLink = document.getElementById('portfolioLink');
+  const portfolioBtn = document.getElementById('portfolioBtn');
   const aboutLink = document.querySelector('a[href="index.html?flip=back"]');
   const homeLink = document.getElementById('homeLink');
-  const contactLink = document.getElementById('contactLink'); // CHANGE #3
+  const contactLink = document.getElementById('contactLink');
+  const contactBtn = document.getElementById('contactBtn');
   const contactSection = document.getElementById('contactSection');
   const contactCloseBtn = document.getElementById('contactCloseBtn');
 
-  /* ----- Initialize card flip on page load if URL param ?flip=back ----- */
-  const urlParams = new URLSearchParams(window.location.search);
+  /* ----- Nav Bar Active ----- */
+  function setActiveLink(activeId) {
+    document.querySelectorAll("nav a").forEach(link => {
+      link.classList.remove("active");
+    });
+    const activeLink = document.getElementById(activeId);
+    if (activeLink) {
+      activeLink.classList.add("active");
+    }
+  }
+
+  /* ----- Initialize card flip on page load if ?flip=back ----- */
   if (urlParams.get('flip') === 'back' && card) {
     card.classList.add(CLASS_FLIPPED);
+    setActiveLink("aboutLink");
+    if (flipToggleBtn) {
+      flipToggleBtn.textContent = 'Flip Card Back Over >>';
+    }
+  } else {
+    setActiveLink("homeLink");
+  }
+
+  /* ----- Flip Card Button ----- */
+  if (flipToggleBtn && card) {
+    flipToggleBtn.addEventListener('click', () => {
+      const isFlipped = card.classList.contains(CLASS_FLIPPED);
+
+      flipToggleBtn.style.opacity = '0';
+      flipToggleBtn.style.pointerEvents = 'none';
+
+      if (isFlipped) {
+        card.classList.remove(CLASS_FLIPPED);
+        setTimeout(() => {
+          flipToggleBtn.textContent = 'Flip Card for More >>';
+          setActiveLink("homeLink");
+        }, flipDuration);
+      } else {
+        card.classList.add(CLASS_FLIPPED);
+        setTimeout(() => {
+          flipToggleBtn.textContent = 'Flip Card Back Over >>';
+          setActiveLink("aboutLink");
+        }, flipDuration);
+      }
+
+      setTimeout(() => {
+        flipToggleBtn.style.opacity = '1';
+        flipToggleBtn.style.pointerEvents = 'auto';
+      }, flipDuration + 500);
+    });
   }
 
   /* ----- Helper delay function ----- */
@@ -39,47 +88,74 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ----- Portfolio tab click ----- */
+  /* ----- Portfolio tab and Button click ----- */
   if (portfolioLink) {
     portfolioLink.addEventListener('click', async function (e) {
       e.preventDefault();
-
       await hideSections(contactSection);
       card.classList.remove(CLASS_FLIPPED);
       cardContainer.classList.add(CLASS_SLIDE_LEFT);
       portfolioSection.classList.remove(CLASS_HIDDEN);
-      void portfolioSection.offsetWidth; // reflow
+      void portfolioSection.offsetWidth;
       portfolioSection.classList.add(CLASS_ACTIVE);
+      setActiveLink("portfolioLink");
+      if (flipToggleBtn) flipToggleBtn.textContent = 'Flip Card for More >>';
     });
   }
 
-  /* ----- About tab click ----- */
+  if (portfolioBtn) {
+    portfolioBtn.addEventListener('click', async function (e) {
+      e.preventDefault();
+      await hideSections(contactSection);
+      card.classList.remove(CLASS_FLIPPED);
+      cardContainer.classList.add(CLASS_SLIDE_LEFT);
+      portfolioSection.classList.remove(CLASS_HIDDEN);
+      void portfolioSection.offsetWidth;
+      portfolioSection.classList.add(CLASS_ACTIVE);
+      setActiveLink("portfolioLink");
+      if (flipToggleBtn) flipToggleBtn.textContent = 'Flip Card for More >>';
+    });
+  }
+
+  /* ----- About tab and Contact Button click ----- */
   if (aboutLink) {
     aboutLink.addEventListener('click', async function (e) {
       e.preventDefault();
-
       await hideSections(portfolioSection, contactSection);
       card.classList.add(CLASS_FLIPPED);
       cardContainer.classList.remove(CLASS_SLIDE_LEFT);
+      setActiveLink("aboutLink");
+      if (flipToggleBtn) flipToggleBtn.textContent = 'Flip Card Back Over >>';
+    });
+  }
+
+  if (contactBtn) {
+    contactBtn.addEventListener('click', async function (e) {
+      e.preventDefault();
+      await hideSections(portfolioSection, contactSection);
+      card.classList.add(CLASS_FLIPPED);
+      cardContainer.classList.remove(CLASS_SLIDE_LEFT);
+      setActiveLink("contactLink");
+      if (flipToggleBtn) flipToggleBtn.textContent = 'Flip Card Back Over >>';
     });
   }
 
   /* ----- Home tab click ----- */
   if (homeLink) {
     homeLink.addEventListener('click', async function (e) {
+      e.preventDefault();
       const isOnHomePage =
         window.location.pathname.endsWith('index.html') ||
         window.location.pathname === '/' ||
         window.location.pathname === '';
 
       if (isOnHomePage) {
-        e.preventDefault();
-
         await hideSections(portfolioSection, contactSection);
         card.classList.remove(CLASS_FLIPPED);
         await delay(flipDuration / 2);
         cardContainer.classList.remove(CLASS_SLIDE_LEFT);
-
+        setActiveLink("homeLink");
+        if (flipToggleBtn) flipToggleBtn.textContent = 'Flip Card for More >>';
         history.replaceState(null, '', 'index.html');
       }
     });
@@ -124,17 +200,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ----- Contact tab click ----- */
   if (contactLink) {
-    contactLink.addEventListener('click', function (e) {
+    contactLink.addEventListener('click', async function (e) {
       e.preventDefault();
 
-      contactSection.classList.remove(CLASS_HIDDEN);
-      void contactSection.offsetWidth; // force reflow
-      contactSection.classList.add(CLASS_ACTIVE);
+      // Flip to back of card (About)
+      await hideSections(portfolioSection, contactSection);
+      card.classList.add(CLASS_FLIPPED);
+      cardContainer.classList.remove(CLASS_SLIDE_LEFT);
+      setActiveLink("aboutLink");
 
-      cardContainer.classList.add(CLASS_DIMMED);
-      portfolioSection.classList.add(CLASS_DIMMED);
+      if (flipToggleBtn) {
+        flipToggleBtn.textContent = 'Flip Card Back Over >>';
+      }
+
+      // Highlight the .ul-icons section
+      const ulIcons = document.querySelector('.ul-icons');
+      if (ulIcons) {
+        ulIcons.classList.add('highlight-flash');
+
+        // Remove highlight after animation
+        setTimeout(() => {
+          ulIcons.classList.remove('highlight-flash');
+        }, 4000); // Match animation duration
+      }
     });
   }
+
+
 
   /* ----- Contact close button ----- */
   if (contactCloseBtn) {
