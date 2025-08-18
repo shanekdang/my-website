@@ -14,14 +14,12 @@
 <body>
     <header>
         <div class="container">
-        <h1 class="logo"></h1>
-
         <nav>
             <ul>
-                <li><a href="index.html" id="homeLink">Home</a></li>
-                <li><a href="index.html?flip=back">About</a></li>
-                <li><a href="#portfolio" id="portfolioLink">Portfolio</a></li>
-                <li><a href="#contact" id="contactLink">Contact</a></li>
+                <li><a id="homeLink" href="#">Home</a></li>
+                <li><a id="aboutLink" href="index.html?flip=back">About</a></li>
+                <li><a id="portfolioLink" href="#">Portfolio</a></li>
+                <li><a id="contactLink" href="#">Contact</a></li>
             </ul>
         </nav>
         </div>
@@ -33,29 +31,27 @@
     </video>
 
     <main class="main-section">
-
         <div class="card-container">
+            <div class="flip-button-container">
+                <button id="flipToggleBtn" class="flip-glow-button">Flip Card for More >></button>
+            </div>
             <div class="card" id="businessCard">
                 <div class="side front">
-                    <!-- <img src="media/icon.png" alt="Icon" class="corner-icon"> -->
                     <div class="hero-card">
                         <div class="hero-info">
                             <h1 data-aos="fade-right" data-aos-duration="1000" data-aos-delay="700">Hi, I'm Shane!</h1>
                             <h2 class="typewriter gradient-text" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="900">
                                 I'm a <span class="typewriter-text"></span><span class="cursor">|</span>
                             </h2>
-                            <p data-aos="flip-down" data-aos-duration="1000" data-aos-delay="1000"> ~ <i>I would love to change the world</i> . . .</p> 
-                            <p class="indent" data-aos="flip-down" data-aos-duration="1000" data-aos-delay="1000"><i>but God won't give me the source code</i> ~</p>
-                            <div class="button-row" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="1100">
-                                <a href="https://github.com/shanekdang/portfolio/raw/main/resume.pdf" target="_blank" class="btn" download>Download Resume</a> 
-                                <ul class="ul-icons">
-                                    <li><a href="https://github.com/shanekdang" aria-label="GitHub Profile"><i class='bx bxl-github'></i></a></li>
-                                    <li><a href="https://www.linkedin.com/in/shane-dang/" aria-label="LinkedIn Profile"><i class='bx bxl-linkedin'></i></a></li>
-                                </ul>
-                            </div>
+                        </div>
+                        <div class="hero-subtext" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="1100">
+                            <p> ~ <i>I would love to change the world</i> . . .</p> 
+                            <p class="indent"><i>but God won't give me the source code</i> ~</p>
+                        </div>
+                        <div class="hero-buttons">
+                            <a href="https://github.com/shanekdang/portfolio/raw/main/resume.pdf" target="_blank" class="btn" download data-aos="zoom-in-right" data-aos-duration="2500" data-aos-delay="1400">Download Resume</a>
                         </div>
                         <div class="card-icon-container" data-aos="zoom-in-left" data-aos-duration="2500">
-                            <!-- <img src="images/headshot2.jpg" alt="person-img"> -->
                             <img src="media/icon.png" alt="Brand Icon" class="card-icon">
                         </div>
                     </div>
@@ -79,24 +75,51 @@
                     </div>
                 </div>
                 <div class="side back card-back">
-                    <div class="about-wrapper">
-                        <div class="hero-img" data-aos="zoom-in-right" data-aos-duration="2500">
+                    <div class="card-back-left">
+                        <div class="about-img" data-aos="zoom-in-right" data-aos-duration="2500">
                             <img src="media/headshot.jpg" alt="Shane Dang">
                         </div>
+
+                        <ul class="ul-icons">
+                            <li>
+                                <div class="icon-row">
+                                <a href="mailto:shanedang17@gmail.com" aria-label="Email">
+                                    <i class='bx bx-envelope'></i>
+                                </a>
+                                <span>shanedang17@gmail.com</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon-row">
+                                <a href="https://github.com/shanekdang" aria-label="GitHub Profile">
+                                    <i class='bx bxl-github'></i>
+                                </a>
+                                <span>www.github.com/shanekdang</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon-row">
+                                <a href="https://www.linkedin.com/in/shane-dang/" aria-label="LinkedIn Profile">
+                                    <i class='bx bxl-linkedin'></i>
+                                </a>
+                                <span>www.linkedin.com/in/shane-dang</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-back-right">
                         <div class="about-content">
-                            <p>Hi, I’m Shane! I blend clean design with thoughtful code.</p>
-                            <p>I’m a <strong>Software Engineer</strong> with 2+ years of experience, fueled by my love for intuitive design and problem-solving.</p>
-                            <p>My journey started from a fascination with how things work—bit by bit, I built projects that marry functionality and creativity.</p>
-                            <p>Away from the screen, I enjoy exploring new places, tinkering with side projects, and always learning something new.</p>
+                            <p>Hi, I’m Shane — a data scientist with a strong foundation in transportation research, combining over two years of experience in data analysis, programming, and crafting clear, actionable visualizations.</p>
+                            <p>My journey started with a natural curiosity for how things work, and in turn, working to improve how things operate — whether that meant reverse-engineering a software tool or rebuilding parts of my 1992 Mazda MX-5 Miata. That same hands-on mindset drives my professional work, where I thrive on solving complex problems, building efficient workflows, and translating data into stories that people can understand and act on.</p>
+                            <p>With a background that bridges technical execution and direct customer interaction, I value not only clean code and scalable systems, but also human-centered solutions that work in the real world.</p>
                             <p class="closing-note">Let’s build something awesome together! 🚀</p>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
-
-        <!-- <button class="btn" onclick="flipCard()">Flip Card</button> -->
-
         <section class="portfolio-section hidden" id="portfolioSection">
             <h2 class="portfolio-title">My Portfolio</h2>
             <div class="portfolio-scroll">
@@ -121,7 +144,6 @@
                     <p>Short description for project three.</p>
                 </div>
                 </div>
-                <!-- Add more items as needed -->
             </div>
         </section>
 
