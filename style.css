@@ -2,7 +2,7 @@
 
 body {
     margin: 0;
-    height: fit-content;
+    min-height: 100vh;
     font-family: 'Work Sans', sans-serif;
     background: #222;
     font-weight: 800;
@@ -55,6 +55,25 @@ main {
   }
 }
 
+@media (max-width: 768px) {
+  .card-back {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-back-left,
+  .card-back-right {
+    width: 100%;
+    max-width: 90%;
+    padding: 10px 0;
+  }
+
+  .about-content {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
 /* ---------- NAV BAR ---------- */
 
 .container {
@@ -90,15 +109,17 @@ nav ul {
 nav li {
     display: inline-block;
     margin-left: 70px;
-    padding-top: 23px;
     position: relative;
 }
 
 nav a {
+    display: inline-block;
+    padding-top: 20px;
+    padding-bottom: 10px;
     color: #444;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 100%;
 }
 
 nav a:hover {
@@ -119,6 +140,59 @@ nav a::before {
 nav a:hover::before {
     width: 100%;
 }
+
+nav a.active {
+  color: #000;
+  font-weight: bold;
+}
+
+nav a.active::before {
+  width: 100%;
+  background-color: #000;
+}
+
+
+/* ---------- CARD FLIPPER TEXT BUTTON STYLES ---------- */
+
+.flip-button-container {
+  position: absolute;
+  top: -6%;
+  right: 2%;
+  z-index: 10;
+}
+
+.flip-glow-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-style: italic;
+  font-size: 1rem;
+  cursor: pointer;
+  animation: glowPulse 2.5s ease-in-out infinite;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  transition: transform 0.5s ease;
+}
+
+.flip-glow-button:hover {
+  transform: scale(1.05);
+}
+
+@keyframes glowPulse {
+  0% {
+    opacity: 0.7;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
+                 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    opacity: 0.7;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  }
+}
+
 
 /* ---------- CARD STYLES ---------- */
 
@@ -176,28 +250,39 @@ nav a:hover::before {
 }
 
 .card-back {
-  /* background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px); */
-  border-radius: 30px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  flex-direction: column;
-  text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    align-items: center;
+    justify-items: center;
+    padding: 40px;
+    gap: 30px;
+    text-align: left;
+    overflow-y: auto;
+    box-sizing: border-box;
+    max-height: 100%;
 }
 
-.about-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  width: 100%;
-  height: 100%;
-  max-width: 1000px;
-  flex-wrap: wrap;
+.card-back-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 30px;
 }
+
+.card-back-right {
+  flex: 1 1 100%;
+  max-width: 100%;
+  height: auto; /* Let it grow naturally */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+
 
 .side {
     position: absolute;
@@ -230,15 +315,17 @@ nav a:hover::before {
 
 .hero-info {
     position: absolute;
-    top: 20%;
+    top: 15%;
     left: 5%;
     width: 45%;
-    font-size: clamp(0.8rem, 1.5vw, 1.2rem); /* auto scales with screen */
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem);
     z-index: 2;
+    /* Add a fixed height to prevent growth from pushing content */
+    height: 8rem; /* adjust this based on expected max height of h2 + paragraphs */
 }
 
 .hero-info h1 {
-    font-size: 3.5em;
+    font-size: 4em;
     margin-bottom: 0px;
     margin-top: 0px;
 }
@@ -246,7 +333,7 @@ nav a:hover::before {
 .hero-info h2 {
     margin-top: 0px;
     margin-bottom: 10px;
-    font-size: 2em;
+    font-size: 2.5em;
     text-transform: uppercase;
     background:linear-gradient(to right, #4acfee, #53f8c9, #6070fd, #5bbdff, #4acfee);
     background-size: 200%;
@@ -257,9 +344,44 @@ nav a:hover::before {
 }
 
 .hero-info p {
-    font-size: 1em;
-    margin-top: 0;
-    margin-bottom: 50px;
+    position: relative;
+    top: 60%;           /* About 60% down the card */
+    left: 0;
+    width: 100%;
+    margin: 0;
+    color: white;       /* Adjust color as needed */
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    z-index: 3;         /* Make sure it's above background but below buttons */
+}
+
+.hero-subtext {
+    position: absolute;
+    top: 45%;
+    left: 5%;
+    width: 90%;
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    color: white;
+    z-index: 3;
+}
+
+.hero-subtext p {
+    margin: 0.5em 0;
+}
+
+.hero-subtext p + p {
+    margin-top: 1.5em; /* Creates a blank line between the two */
+}
+
+.hero-buttons {
+    display: flex;
+    position: absolute;
+    top: 63%;
+    left: 5%;
+    width: 100%;
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    z-index: 3;
+    gap: 4em;
+
 }
 
 .hero-img {
@@ -280,12 +402,42 @@ nav a:hover::before {
     mix-blend-mode: lighten;
 }
 
+.about-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+    flex-wrap: wrap;
+}
+
+.about-img {
+    width: clamp(80%, 30vw, 300px); /* Larger size range */
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 15px #4acfee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.about-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .about-content {
-  max-width: 600px;
-  margin: 0 auto;
-  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  width: 100%;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem); /* Scales with screen */
   line-height: 1.6;
   color: #fff;
+  overflow: visible;         /* Don't force scrollbars */
+  word-break: break-word;    /* Break long words when needed */
 }
 
 .about-content p {
@@ -298,6 +450,24 @@ nav a:hover::before {
   font-style: italic;
   color: #4acfee;
   text-align: center;
+}
+
+
+.skills-list {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+
+  column-gap: 40px;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.skills-list li {
+  break-inside: avoid;
+  margin-bottom: 8px;
+  list-style-type: disc;
+  color: #fff;
 }
 
 .card-icon-container {
@@ -367,24 +537,46 @@ nav a:hover::before {
 }
 
 .ul-icons {
-    display: flex;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
 }
 
 .ul-icons li {
-    list-style: none;
-    margin-left: 10px;
+  list-style: none;
+}
+
+.icon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap; /* Prevents wrapping */
+}
+
+.icon-row span {
+  font-size: 0.95rem;
+  color: white;
+  max-width: 250px;  /* Optional: control how wide the label can grow */
+  overflow-wrap: break-word;
 }
 
 .ul-icons a {
     display: inline-flex;
-    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    
+    width: 150%;              /* 🔽 Smaller size */
+    aspect-ratio: 1/1;
+
+    padding: 0;
+    font-size: 150%;          /* 🔽 Smaller icon */
     border: 2px solid #4acfee;
     border-radius: 50%;
-    font-size: 20px;
     color: #4acfee;
     text-decoration: none;
-    margin: 0 7px;
     transition: 0.3s;
 }
 
@@ -393,6 +585,7 @@ nav a:hover::before {
     color: #0e1217;
     box-shadow: 0 0 10px #4acfee;
 }
+
 
 /* ---------- BUTTON STYLES ---------- */
 
@@ -559,65 +752,25 @@ button.btn.slide-left {
 
 /* ---------- CONTACT SECTION ---------- */
 
-.contact-section {
-    position: fixed;
-    top: 100%;               /* Start below the viewport */
-    left: 0;
-    width: 100%;
-    height: 100vh;           /* Full viewport height */
-    background: rgba(0, 0, 0, 0.85); /* Dark translucent overlay */
-    backdrop-filter: blur(12px);
-    color: white;
-    padding: 40px;
-    box-sizing: border-box;
-    transition: top 0.6s ease;
-    z-index: 1000;           /* On top of everything */
-    overflow-y: auto;        /* Scroll if content overflows */
-}
-
-.contact-section.active {
-  top: 60px; /* same as header height */
+.highlight-flash {
+  animation-name: pulse-highlight;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 2; /* repeats twice */
+  animation-fill-mode: forwards;
+  box-shadow: 0 0 0 4px #4acfee80;
+  border-radius: 12px;
 }
 
 
-.contact-section.active {
-  left: 0;
-}
-
-.contact-title {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.contact-form input,
-.contact-form textarea {
-  padding: 15px;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: 1rem;
-  resize: none;
-  outline: none;
-}
-
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  color: #ccc;
-}
-
-#contactCloseBtn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1100;
+@keyframes pulse-highlight {
+  0% {
+    box-shadow: 0 0 0 0px #4acfee80;
+  }
+  50% {
+    box-shadow: 0 0 12px 4px #4acfee;
+  }
+  100% {
+    box-shadow: 0 0 0 0px transparent;
+  }
 }
