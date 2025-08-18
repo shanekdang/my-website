@@ -8,6 +8,7 @@ body {
     font-weight: 800;
     max-width: 100%;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 main {
@@ -241,9 +242,9 @@ nav a.active::before {
     /* transition: transform 0.8s ease; */
 }
 
-.front {
+/* .front {
     
-}
+} */
 
 .back {
     transform: rotateY(180deg);
@@ -257,7 +258,7 @@ nav a.active::before {
     padding: 40px;
     gap: 30px;
     text-align: left;
-    overflow-y: auto;
+    overflow-y: hidden;
     box-sizing: border-box;
     max-height: 100%;
 }
@@ -584,6 +585,43 @@ nav a.active::before {
     background: #4acfee;
     color: #0e1217;
     box-shadow: 0 0 10px #4acfee;
+}
+
+.hover-car {
+  position: relative;
+  cursor: pointer;
+  color: #4acfee;
+  text-decoration: underline dashed;
+  font-weight: 500;
+}
+
+.car-tooltip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(300px, 60vw);  /* Responsive max width */
+  border: 2px solid #4acfee;
+  border-radius: 8px;
+  padding: 6px;
+  background: #0d1117;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.car-tooltip img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+}
+
+.hover-car:hover .car-tooltip {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 
