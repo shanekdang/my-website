@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ----- Elements ----- */
   const urlParams = new URLSearchParams(window.location.search);
+  const flipParam = urlParams.get('flip');
   const card = document.getElementById('businessCard');
   const flipToggleBtn = document.getElementById('flipToggleBtn');
   const cardContainer = document.querySelector('.card-container');
@@ -44,6 +45,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   } else {
     setActiveLink("homeLink");
+  }
+
+  if (card) {
+    if (flipParam === 'back') {
+      card.classList.add(CLASS_FLIPPED);
+    } else if (flipParam === 'front') {
+      card.classList.remove(CLASS_FLIPPED);
+    }
   }
 
   /* ----- Flip Card Button ----- */
@@ -125,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
       card.classList.add(CLASS_FLIPPED);
       cardContainer.classList.remove(CLASS_SLIDE_LEFT);
       setActiveLink("aboutLink");
+      history.replaceState(null, '', 'index.html?flip=back');
       if (flipToggleBtn) flipToggleBtn.textContent = 'Flip Card Back Over >>';
     });
   }
@@ -144,22 +154,23 @@ document.addEventListener('DOMContentLoaded', function () {
   if (homeLink) {
     homeLink.addEventListener('click', async function (e) {
       e.preventDefault();
-      const isOnHomePage =
-        window.location.pathname.endsWith('index.html') ||
-        window.location.pathname === '/' ||
-        window.location.pathname === '';
 
-      if (isOnHomePage) {
-        await hideSections(portfolioSection, contactSection);
-        card.classList.remove(CLASS_FLIPPED);
-        await delay(flipDuration / 2);
-        cardContainer.classList.remove(CLASS_SLIDE_LEFT);
-        setActiveLink("homeLink");
-        if (flipToggleBtn) flipToggleBtn.textContent = 'Flip Card for More >>';
-        history.replaceState(null, '', 'index.html');
+      await hideSections(portfolioSection, contactSection);
+
+      card.classList.remove(CLASS_FLIPPED); // show front side
+      cardContainer.classList.remove(CLASS_SLIDE_LEFT);
+
+      if (flipToggleBtn) {
+        flipToggleBtn.textContent = 'Flip Card for More >>';
       }
+
+      setActiveLink("homeLink");
+
+      // Update the URL param without page reload
+      history.replaceState(null, '', 'index.html?flip=front');
     });
   }
+
 
   /* ----- Typewriter effect ----- */
   const words = ["DATA ANALYST", "PROGRAMMER", "SOFTWARE ENGINEER"];
